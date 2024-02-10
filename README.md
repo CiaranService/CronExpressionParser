@@ -13,10 +13,14 @@ Clone Cron Expression Parser from git:
 ```bash
 git clone https://github.com/CiaranService/CronExpressionParser
 ```
-Navigate to root of installed files and run:
+Navigate to root of installed files and install using maven:
 ```bash
 mvn clean install
 ```
+
+Jar file with dependencies installed should be now installed in target directory:
+
+target/CronExpressionParser-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 ## Usage
 Run the created jar file with cron expression passed as a String:
