@@ -8,13 +8,20 @@ public class Parser {
 
     private final ArrayList<TimeMeasurement> parsedTimes;
     private String command;
+
     public Parser(String input) throws InvalidInputException {
         parsedTimes = splitInput(input);
     }
 
-    public ArrayList<TimeMeasurement> splitInput(String expression) throws InvalidInputException {
+    /**
+     * Splits the cron expression into individual time measurements
+     * @param cronExpression
+     * @return list of time measurements
+     * @throws InvalidInputException
+     */
+    public ArrayList<TimeMeasurement> splitInput(String cronExpression) throws InvalidInputException {
 
-        String[] splitExpressions = expression.split(" ");
+        String[] splitExpressions = cronExpression.split(" ");
         ArrayList<TimeMeasurement> parsedTimes = new ArrayList<>();
 
         if (splitExpressions.length == 6){
