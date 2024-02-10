@@ -66,7 +66,7 @@ public class TimeMeasurementTest {
     }
 
     @Test
-    public void validTestAstrix() throws InvalidInputException {
+    public void validTestAsterisk() throws InvalidInputException {
         for (int x = minTimeInterval; x <= maxTimeInterval; x++) {
             correctListOfMinutes.add(x);
         }
@@ -98,7 +98,7 @@ public class TimeMeasurementTest {
     }
 
     @Test
-    public void testStepValuesSeparatorWithAsterisk() throws InvalidInputException {
+    public void testStepWithAsterisk() throws InvalidInputException {
         for (int x = minTimeInterval; x <= maxTimeInterval; x+= 2) {
             correctListOfMinutes.add(x);
         }
@@ -106,7 +106,7 @@ public class TimeMeasurementTest {
     }
 
     @Test
-    public void testStepValuesSeparatorWithLimit() throws InvalidInputException {
+    public void testStepWithRange() throws InvalidInputException {
         for (int x = 10; x <= 39; x+=2){
             correctListOfMinutes.add(x);
         }
@@ -120,7 +120,7 @@ public class TimeMeasurementTest {
     }
 
     @Test
-    public void testInvalidInputNoTimes() {
+    public void testInvalidInputNoIntegers() {
         exceptionTest(",-/",  "invalid input");
     }
 
@@ -136,22 +136,28 @@ public class TimeMeasurementTest {
     }
 
     @Test
-    public void testInvalidInputSeparatorNoRange() {
+    public void testInvalidInputIncrementZero() {
+        exceptionTest("*/0",  "increment outside time constraints");
+
+    }
+
+    @Test
+    public void testInvalidInputStepMissingRange() {
         exceptionTest("/10",  "invalid input");
     }
 
     @Test
-    public void testInvalidInputSeparatorNoIncrement() {
+    public void testInvalidInputStepMissingIncrement() {
         exceptionTest("*/",  "invalid input");
     }
 
     @Test
-    public void testInvalidInputSeparatorInvalidRange() {
+    public void testInvalidInputStepRangeAboveMaximum() {
         exceptionTest("17-101/2", "input outside time constraints");
     }
 
     @Test
-    public void testInvalidInputSeparatorInvalidRange1() {
+    public void testInvalidInputStepRangeBelowMinimum() {
         exceptionTest("0-6/2", "input outside time constraints");
     }
 

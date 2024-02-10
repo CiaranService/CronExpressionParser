@@ -90,18 +90,24 @@ public class TimeMeasurement {
      */
     private List<Integer> getStepExpressionTimeIntervals(String expression) throws InvalidInputException {
         ArrayList<Integer> timeIntervals = new ArrayList<>();
-
         String[] stepExpression = expression.split("/");
+        int increment;
+
+        try {
+            increment = Integer.parseInt(stepExpression[1]);
+            if (increment > maxTimeInterval || increment <= 0){
+                throw new InvalidInputException(name + ": increment outside time constraints");
+            }
+        }catch(ArrayIndexOutOfBoundsException e){
+            throw new InvalidInputException(name + ": invalid input");
+        }
 
         if (stepExpression[0].contains("-")){
-            try {
                 timeIntervals.addAll(getTimeIntervalsWithinRange(stepExpression[0],
-                        Integer.parseInt(stepExpression[1])));
-            }catch(ArrayIndexOutOfBoundsException e){
-                throw new InvalidInputException(name + ": invalid input");
-            }
+                        increment));
+
         } else if (stepExpression.length == 2 && stepExpression[0].equals("*")) {
-            for (int x = minTimeInterval; x <= maxTimeInterval; x += Integer.parseInt(stepExpression[1])) {
+            for (int x = minTimeInterval; x <= maxTimeInterval; x += increment) {
                 timeIntervals.add(x);
             }
         }else{
@@ -120,14 +126,17 @@ public class TimeMeasurement {
      */
     private List<Integer> getTimeIntervalsWithinRange(String expression, int increment) throws InvalidInputException {
 
-        if (increment > maxTimeInterval){
-            throw new InvalidInputException(name + ": increment outside time constraints");
-        }
         String[] range = expression.split("-");
         ArrayList<Integer> timeIntervals = new ArrayList<>();
+        int lowerBound = Integer.parseInt(range[0]);
+        int upperBound = Integer.parseInt(range[1]);
 
-        if (Integer.parseInt(range[0]) >= minTimeInterval && Integer.parseInt(range[1]) <= maxTimeInterval ) {
-            for (int x = Integer.parseInt(range[0]); x <= Integer.parseInt(range[1]); x += increment) {
+        if (Integer.parseInt(range[0]) > Integer.parseInt(range[1]) ){
+            throw new InvalidInputException(name + ": lower bound must be lower than or equal to upper bound in range expression");
+        }
+
+        if (lowerBound >= minTimeInterval && upperBound <= maxTimeInterval ) {
+            for (int x = lowerBound; x <= upperBound; x += increment) {
                 timeIntervals.add(x);
             }
         }else{
