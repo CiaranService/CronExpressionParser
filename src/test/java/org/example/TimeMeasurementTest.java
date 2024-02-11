@@ -98,6 +98,11 @@ public class TimeMeasurementTest {
     }
 
     @Test
+    public void testRangeOfValuesMinGreaterThanMax() throws InvalidInputException {
+        exceptionTest("5-2", "lower bound must be lower than or equal to upper bound in range expression");
+    }
+
+    @Test
     public void testStepWithAsterisk() throws InvalidInputException {
         for (int x = minTimeInterval; x <= maxTimeInterval; x+= 2) {
             correctListOfMinutes.add(x);

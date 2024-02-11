@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 
 /**
  * Time Measurement contains fields and methods that are used to determine
- * the actual time intervals based on a cron expression
+ * the actual time intervals for a time measurement (i.e. minute, hour,
+ * day of month, month, day of week) based on a cron expression
  */
 public class TimeMeasurement {
     @Getter

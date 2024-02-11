@@ -4,6 +4,9 @@ import org.example.Exceptions.InvalidInputException;
 
 import java.util.ArrayList;
 
+/**
+ * Parser is used to parse the full Cron Expression input
+ */
 public class Parser {
 
     private final ArrayList<TimeMeasurement> parsedTimes;
@@ -39,6 +42,9 @@ public class Parser {
 
     }
 
+    /**
+     * @return a String in the format of
+     */
     public String toString(){
         StringBuilder string = new StringBuilder();
 
