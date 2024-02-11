@@ -4,8 +4,8 @@ Cron Expression Parser is my implementation of Deliveroo's Technical Task.
 
 ## Prerequisites
 
-* Maven installed and added to PATH
-* Java installed and added to PATH
+* Latest version of Maven installed and added to PATH
+* Latest version of Java installed and added to PATH
 
 ## Installation
 
