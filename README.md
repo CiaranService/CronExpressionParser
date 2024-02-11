@@ -26,13 +26,13 @@ target/CronExpressionParser-1.0-SNAPSHOT-jar-with-dependencies.jar
 Run the created jar file with cron expression passed as a String:
 
 ```bash
-java -jar target/CronExpressionParser-1.0-SNAPSHOT-jar-with-dependencies.jar <cron expression>
+java -jar target/CronExpressionParser-1.0-jar-with-dependencies.jar <cron expression>
 ```
 
 ## Example 
 
 ```bash
-java -jar target/CronExpressionParser-1.0-SNAPSHOT-jar-with-dependencies.jar "*/15 0 1,15 * 1-5 /usr/bin/find"
+java -jar target/CronExpressionParser-1.0-jar-with-dependencies.jar "*/15 0 1,15 * 1-5 /usr/bin/find"
 ```
 
 Should yield the following output:
