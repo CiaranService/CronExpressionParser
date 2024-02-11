@@ -5,7 +5,7 @@ import org.example.Exceptions.InvalidInputException;
 import java.util.ArrayList;
 
 /**
- * Parser is used to parse the full Cron Expression input
+ * Parser is used to parse a cron expression
  */
 public class Parser {
 
@@ -43,7 +43,7 @@ public class Parser {
     }
 
     /**
-     * @return a String in the format of
+     * @return a String in the format laid out in technical task
      */
     public String toString(){
         StringBuilder string = new StringBuilder();
