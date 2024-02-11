@@ -25,13 +25,14 @@ public class TimeMeasurement {
         this.maxTimeInterval = maxTimeInterval;
         try {
             this.actualTimeIntervals = determineTimeIntervals(expression);
-        }catch(NumberFormatException numberFormatException){
+        } catch (NumberFormatException numberFormatException) {
             throw new InvalidInputException(name + ": invalid input");
         }
     }
 
     /**
      * determine the time intervals based on time measurement cron expression
+     *
      * @param expression
      * @return list of time intervals based on cron expression
      * @throws InvalidInputException
@@ -39,21 +40,21 @@ public class TimeMeasurement {
     public List<Integer> determineTimeIntervals(String expression) throws InvalidInputException {
         List<Integer> validTimeIntervals = new ArrayList<>();
 
-        if (expression.contains(",")){
+        if (expression.contains(",")) {
             validTimeIntervals.addAll(expressionSeparator(expression));
-        }else if(expression.contains("/")){
+        } else if (expression.contains("/")) {
             validTimeIntervals.addAll(getStepExpressionTimeIntervals(expression));
-        }else if(expression.contains("-")) {
+        } else if (expression.contains("-")) {
             validTimeIntervals.addAll(getTimeIntervalsWithinRange(expression, 1));
-        }else if(expression.equals("*")){
-            for (int x = minTimeInterval; x <= maxTimeInterval; x++){
+        } else if (expression.equals("*")) {
+            for (int x = minTimeInterval; x <= maxTimeInterval; x++) {
                 validTimeIntervals.add(x);
             }
-        }else {
+        } else {
             int time = Integer.parseInt(expression);
             if (time >= minTimeInterval && time <= maxTimeInterval) {
                 validTimeIntervals.add(Integer.parseInt(expression));
-            }else{
+            } else {
                 throw new InvalidInputException(name + ": input outside time constraints");
             }
         }
@@ -68,6 +69,7 @@ public class TimeMeasurement {
 
     /**
      * split the cron expression on a comma and determineTimeIntervals
+     *
      * @param expression
      * @return list of time intervals based on cron expression
      * @throws InvalidInputException
@@ -76,7 +78,7 @@ public class TimeMeasurement {
         ArrayList<Integer> timeIntervals = new ArrayList<>();
         String[] separatedTimes = expression.split(",");
 
-        for (String separatedTime : separatedTimes){
+        for (String separatedTime : separatedTimes) {
             timeIntervals.addAll(determineTimeIntervals(separatedTime));
         }
 
@@ -85,8 +87,9 @@ public class TimeMeasurement {
 
     /**
      * determine time intervals for a step expression
+     *
      * @param expression valid examples: "&#42/2", "11-49/5"
-     * @return
+     * @return list of time intervals based on cron expression
      * @throws InvalidInputException
      */
     private List<Integer> getStepExpressionTimeIntervals(String expression) throws InvalidInputException {
@@ -96,23 +99,23 @@ public class TimeMeasurement {
 
         try {
             increment = Integer.parseInt(stepExpression[1]);
-            if (increment > maxTimeInterval || increment <= 0){
+            if (increment > maxTimeInterval || increment <= 0) {
                 throw new InvalidInputException(name + ": increment outside time constraints");
             }
-        }catch(ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             throw new InvalidInputException(name + ": invalid input");
         }
 
-        if (stepExpression[0].contains("-")){
-                timeIntervals.addAll(getTimeIntervalsWithinRange(stepExpression[0],
-                        increment));
+        if (stepExpression[0].contains("-")) {
+            timeIntervals.addAll(getTimeIntervalsWithinRange(stepExpression[0],
+                    increment));
 
         } else if (stepExpression.length == 2 && stepExpression[0].equals("*")) {
             for (int x = minTimeInterval; x <= maxTimeInterval; x += increment) {
                 timeIntervals.add(x);
             }
-        }else{
-            throw new InvalidInputException( name + ": invalid input");
+        } else {
+            throw new InvalidInputException(name + ": invalid input");
         }
 
         return timeIntervals;
@@ -120,9 +123,10 @@ public class TimeMeasurement {
 
     /**
      * determine time intervals for a step expression with given increment
+     *
      * @param expression valid expressions: "20-40", "5-6"
      * @param increment
-     * @return
+     * @return list of time intervals based on cron expression
      * @throws InvalidInputException
      */
     private List<Integer> getTimeIntervalsWithinRange(String expression, int increment) throws InvalidInputException {
@@ -132,18 +136,17 @@ public class TimeMeasurement {
         int lowerBound = Integer.parseInt(range[0]);
         int upperBound = Integer.parseInt(range[1]);
 
-        if (Integer.parseInt(range[0]) > Integer.parseInt(range[1]) ){
+        if (Integer.parseInt(range[0]) > Integer.parseInt(range[1])) {
             throw new InvalidInputException(name + ": lower bound must be lower than or equal to upper bound in range expression");
         }
 
-        if (lowerBound >= minTimeInterval && upperBound <= maxTimeInterval ) {
+        if (lowerBound >= minTimeInterval && upperBound <= maxTimeInterval) {
             for (int x = lowerBound; x <= upperBound; x += increment) {
                 timeIntervals.add(x);
             }
-        }else{
+        } else {
             throw new InvalidInputException(name + ": input outside time constraints");
         }
-        return  timeIntervals;
+        return timeIntervals;
     }
-
 }
